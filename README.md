@@ -121,4 +121,4 @@ To query an index, it is as simple as making a rep call on the Index Object usin
 
   Translated into an url, the content search performed on the fabric node `<URL>` using the Index Object `<QID>` in library `<ILIB>` with the query `f_synopsis:=Targaryen AND f_type:=episode` will have the following url :
 
-  `https://<URL>/qlibs/<LIB>/q/<QID>/rep/md_field_search?query=f_synopsis%3A%3DTargaryen%20AND%20f_type%3A%3Depisode&authorization=<TOKEN>`
+  `https://<URL>/qlibs/<LIB>/q/<QID>/rep/md_content_search?query=f_synopsis%3A%3DTargaryen%20AND%20f_type%3A%3Depisode&authorization=<TOKEN>`
