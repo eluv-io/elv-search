@@ -117,7 +117,7 @@ To query an index, it is as simple as making a rep call on the Index Object usin
 `query` has the following possible formats :
   * `<keyword>` to make a global search regardless on the field name
   * `f_<searchable_field_name>:=<keyword>` to restrict to search to the field `<searchable_field_name>`
-  * `AND` and `OR` are also possible, example : `f_synopsis:=Lagertha AND f_type:=episode`
+  * `AND` and `OR` are also possible, example : `f_synopsis:=Targaryen AND f_type:=episode`
 
   Translated into an url, the content search performed on the fabric node `<URL>` using the Index Object `<QID>` in library `<ILIB>` with the query `f_synopsis:=Targaryen AND f_type:=episode` will have the following url :
 
