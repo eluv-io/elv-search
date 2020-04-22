@@ -31,3 +31,53 @@ To query an index, it is as simple as making a rep call on the Index Object usin
   * `bin/searchable-fields <HOST> <LIB> <QID> <TOKEN>` will return the list of fields that are searchable
   * `bin/content-search <HOST> <LIB> <QID> <TOKEN> "<QUERY>"` will perform a content search using the specified query (notice the quotes around `<QUERY>`)
   * `bin/field-search <HOST> <LIB> <QID> <TOKEN> "<QUERY>"` will perform a field search using the specified query
+
+## Search results
+
+### Content Search
+
+The results of a content search will be a json list of items like the one below :
+
+```json
+{
+  "hash": [
+    "hq__XXXXX"
+  ],
+  "source": [
+    "hq__XXXXX/.../<field1_path>",
+    "hq__XXXXX/.../<field2_path>",
+    "hq__XXXXX/.../<field3_path>",
+    "..."
+  ]
+}
+```
+
+where
+* `hash` is the hash of the content that is found
+* `source` are all the metadata fields of that content that are indexed
+
+### Field Search
+
+The results of a field search will be a json list of items like the one below :
+
+```json
+  {
+    "namespace": [
+      "/.../.../.../<namespace1>",
+      "/.../.../.../<namespace2>",
+      "/.../.../.../<namespace3>",
+      "..."
+    ],
+    "source": [
+      "hq__XXXXX/.../<field_path>"
+    ],
+    "value": [
+      "<value_at_source>"
+    ]
+  }
+```
+
+where
+* `namespace` are the metadata keys (from the root content metadata) that links to that field
+* `source` is the path of the metadata field that is found
+* `value` is the value of that field
