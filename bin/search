@@ -1,0 +1,19 @@
+#!/bin/bash
+HOST=$1
+LIB=$2
+QID=$3
+TOKEN=$4
+SEARCH_FUNCTION=$5
+QUERY=$6
+
+urlencode() {
+  python2 -c 'import urllib, sys; print urllib.quote(sys.argv[1], sys.argv[2])' \
+    "$1" "$urlencode_safe"
+}
+
+echo "${QUERY}"
+QUERY=$(urlencode "${QUERY}")
+echo "${QUERY}"
+URL="https://${HOST}/qlibs/${LIB}/q/${QID}/rep/${SEARCH_FUNCTION}?query=${QUERY}&authorization=${TOKEN}"
+echo "URL : ${URL}"
+curl -s -X GET "${URL}" | jq

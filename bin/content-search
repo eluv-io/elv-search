@@ -1,0 +1,10 @@
+#!/bin/bash
+HOST=$1
+LIB=$2
+QID=$3
+TOKEN=$4
+QUERY=$5
+
+SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
+
+$SCRIPT_DIR/search $HOST $LIB $QID $TOKEN md_content_search "${QUERY}"
