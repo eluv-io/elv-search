@@ -32,7 +32,43 @@ To query an index, it is as simple as making a rep call on the Index Object usin
   * `bin/content-search <HOST> <LIB> <QID> <TOKEN> "<QUERY>"` will perform a content search using the specified query (notice the quotes around `<QUERY>`)
   * `bin/field-search <HOST> <LIB> <QID> <TOKEN> "<QUERY>"` will perform a field search using the specified query
 
+## Pagination
+
+Pagination can be used with three simple parameters :
+* `start` is the index of the first result to return (default value is 0)
+* `limit` is the maximum number of result to return (default value is `max_total`)
+* `max_total` is the maximum total number of results that could be requested (`max_total` >= `limit`). It is useful to indicate to the server the number of results will never exceed a certain amount (default value is `2048`)
+
 ## Search results
+
+### Field Search
+
+The results of a field search will be a json list of items like the one below :
+
+```json
+{
+  "hash": "hq__XXXXX",
+  "path": "infos/cast[0]/name",
+  "value": "Keanu Reeves",
+  "links": [
+    {
+      "field": "actor_name",
+      "namespace": "public.movies.infos.name",
+      "path": "public/movies[42]/infos/cast[0]/name"
+    },
+    "...",
+  ],
+}
+```
+
+where
+* `hash` is the version hash of the object containing the field value
+* `path` is the json path relative to the object containing it
+* `value` is the value of that field
+* `links` contains all the links that have been found by the crawler that point to that field.
+  * `field` is the name of the field as seen by the search engine (i.e. searchable field)
+  * `namespace` are the metadata keys (from the root content metadata) that links to that field
+  * `path` is the json path (from the root content metadata) that points to the field
 
 ### Content Search
 
@@ -40,13 +76,20 @@ The results of a content search will be a json list of items like the one below 
 
 ```json
 {
-  "hash": [
-    "hq__XXXXX"
-  ],
-  "source": [
-    "hq__XXXXX/.../<field1_path>",
-    "hq__XXXXX/.../<field2_path>",
-    "hq__XXXXX/.../<field3_path>",
+  "hash": "hq__XXXXX",
+  "fields": [
+    {
+      "path": "infos/cast[0]/name",
+      "value": "Keanu Reeves",
+      "links": [
+        {
+          "field": "actor_name",
+          "namespace": "public.movies.infos.name",
+          "path": "public/movies[42]/infos/cast[0]/name"
+        },
+        "...",
+      ],
+    },
     "..."
   ]
 }
@@ -54,30 +97,4 @@ The results of a content search will be a json list of items like the one below 
 
 where
 * `hash` is the hash of the content that is found
-* `source` are all the metadata fields of that content that are indexed
-
-### Field Search
-
-The results of a field search will be a json list of items like the one below :
-
-```json
-  {
-    "namespace": [
-      "/.../.../.../<namespace1>",
-      "/.../.../.../<namespace2>",
-      "/.../.../.../<namespace3>",
-      "..."
-    ],
-    "source": [
-      "hq__XXXXX/.../<field_path>"
-    ],
-    "value": [
-      "<value_at_source>"
-    ]
-  }
-```
-
-where
-* `namespace` are the metadata keys (from the root content metadata) that links to that field
-* `source` is the path of the metadata field that is found
-* `value` is the value of that field
+* `fields` contains all the fields that have been crawled on this content. The format of each entry in `field` is the same as the entry of a field search result (except for the missing `hash`).
