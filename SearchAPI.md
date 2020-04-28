@@ -39,6 +39,10 @@ Pagination can be used with three simple parameters :
 * `limit` is the maximum number of result to return (default value is `max_total`)
 * `max_total` is the maximum total number of results that could be requested (`max_total` >= `limit`). It is useful to indicate to the server the number of results will never exceed a certain amount (default value is `2048`)
 
+## Metadata Selection
+
+An additional parameter called `select` can be specified to select metadata subpaths (relative to the content) to resolve and embed in the query results. Several subpaths can be specified using comma-separated format. Example `select=/infos/cast,/infos/title`.
+
 ## Search results
 
 ### Field Search
@@ -58,6 +62,7 @@ The results of a field search will be a json list of items like the one below :
     },
     "...",
   ],
+  "meta": { /* ... */ }
 }
 ```
 
@@ -69,6 +74,7 @@ where
   * `field` is the name of the field as seen by the search engine (i.e. searchable field)
   * `namespace` are the metadata keys (from the root content metadata) that links to that field
   * `path` is the json path (from the root content metadata) that points to the field
+* `meta` is present and contains the selected subpaths of `hq__XXXXX` if `select` was provided
 
 ### Content Search
 
@@ -91,10 +97,12 @@ The results of a content search will be a json list of items like the one below 
       ],
     },
     "..."
-  ]
+  ],
+  "meta": { /* ... */ }
 }
 ```
 
 where
 * `hash` is the hash of the content that is found
 * `fields` contains all the fields that have been crawled on this content. The format of each entry in `field` is the same as the entry of a field search result (except for the missing `hash`).
+* `meta` is present and contains the selected subpaths of `hq__XXXXX` if `select` was provided
