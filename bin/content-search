@@ -7,4 +7,4 @@ QUERY=$5
 
 SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 
-$SCRIPT_DIR/search $HOST $LIB $QID $TOKEN md_content_search "${QUERY}"
+$SCRIPT_DIR/search $HOST $LIB $QID $TOKEN search_content "${QUERY}"

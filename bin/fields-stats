@@ -1,0 +1,9 @@
+#!/bin/bash
+HOST=$1
+LIB=$2
+QID=$3
+TOKEN=$4
+
+URL="https://${HOST}/qlibs/${LIB}/q/${QID}/meta/indexer/stats/fields?authorization=${TOKEN}"
+echo "URL : ${URL}"
+curl -s -X GET "${URL}" | jq
