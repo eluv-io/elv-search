@@ -1,5 +1,6 @@
 pub mod crawler;
 pub mod indexer;
+pub mod searcher;
 pub mod utils;
 
 #[cfg(test)]
